@@ -1,0 +1,1 @@
+This Folder shall contain the html and css files for the application
