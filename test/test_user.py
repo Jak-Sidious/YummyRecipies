@@ -9,7 +9,7 @@ class Users(unittest.TestCase):
         '''Test case to ensure that the test constructor creates an
         object
         '''
-        result = User('fname', 'lname', 12, 'm')
+        result = User('fname', 'lname')
         self.assertIsInstance(result, object)
 
 if __name__ == '__main__':
