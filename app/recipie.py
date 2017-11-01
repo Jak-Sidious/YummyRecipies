@@ -6,7 +6,7 @@ class Recipie(object):
         self.ingridents = []
         self.procdeure = []
 
-    def add_ingridents(self, ingrid):
+    def add_ingrident(self, ingrid):
         '''Method to add iningredients to a recipie'''
         self.ingridents.append(ingrid)
 
