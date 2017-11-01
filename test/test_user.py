@@ -7,9 +7,8 @@ class Users(unittest.TestCase):
 
     def test_user_constructor(self):
         '''Test case to ensure that the test constructor creates an
-        object 
+        object
         '''
-        # use = User()
         result = User('fname', 'lname', 12, 'm')
         self.assertIsInstance(result, object)
 
