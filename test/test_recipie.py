@@ -10,6 +10,6 @@ class Recipes(unittest.TestCase):
         '''Test case to ensure that the test constructor creates an
         object
         '''
-        result = Recipie('fname')
+        result = Recipie()
         self.assertIsInstance(result, object)
 
