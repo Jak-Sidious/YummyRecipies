@@ -5,10 +5,12 @@ class User(object):
         self.username = username
         self.password = password
 
-    # def getuser(self):
-    #     '''Method to display the user name'''
-    #     return self.username
-
-    # def getpassword(self):
-    #     '''method to return the user's password'''
-    #     return self.password
+    #this should be one of the tests
+    def signin(self, uname, pword):
+        '''Method to determine if the username is correct or not'''
+        text1 = "You have succesfully entered your username and password"
+        text2 = "please enter the correct username and/or password"
+        if uname == self.username and pword == self.password:
+            return text1
+        else:
+            return text2
