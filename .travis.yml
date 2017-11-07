@@ -6,7 +6,7 @@ install:
  - pip install coveralls
 
 script: 
- - nosetests -v --with-coverage --cover-package=app
+ - nosetests -v --with-coverage --cover-package=test
  #- nosetests -v --with-coverage --cover-package=app
 
 after success:
