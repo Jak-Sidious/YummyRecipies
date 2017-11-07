@@ -32,9 +32,42 @@ class Users(unittest.TestCase):
         self.userr.categorycreate('name of category', 'description of category')
         edit = self.userr.edit_category('name of category', 'descrip')
         self.assertEqual('descrip', self.categoriz['name of category'].description)
-    
+
     def test_if_category_is_deleted(self):
         ''' test whether a category gets deleted'''
         self.userr.categorycreate('name of category', 'description of category')
         delete = self.userr.delete_category('name of category')
         self.assertNotIn('name of category', self.categoriz)
+
+# Recipies tests
+    def test_if_user_recipie_is_created(self):
+        ''' Test whether a recipie is created'''
+        self.userr.categorycreate('name of category', 'description of category')
+        self.userr.create_recipe('name of category', 'category name',
+                                 'category/name')
+        self.assertIn('category name', self.categoriz['name of category'].recipes)
+
+    # need to design this test
+    # def test_if_recipie_is_viewable(self):
+    #     '''Test if the recipe can be viewed'''
+    #     self.userr.categorycreate('name of category', 'description of category')
+    #     self.userr.create_recipe('name of category', 'category name',
+    #                              'category/name')
+    #     viewable_recipie = self.userr.view_recipe('name of category', 'category name')
+    #     self.assertEqual('category name', viewable_recipie)
+
+    def test_if_recipe_is_editable(self):
+        self.userr.categorycreate('name of category', 'description of category')
+        self.userr.create_recipe('name of category', 'name of recipie',
+                                 'ingrids')
+        self.userr.edit_recipe('name of category', 'name of recipie', 'new ingrids')
+        self.assertEqual('new ingrids',
+                         self.categoriz['name of category'].recipes['name of recipie'].ingridents)
+
+    def test_deleted_recipe(self):
+        self.userr.categorycreate('name of category', 'description of category')
+        self.userr.create_recipe('name of category', 'name of recipie',
+                                 'ingrids')
+        self.userr.delete_recipie('name of category', 'name of recipie')
+        self.assertNotIn('name of recipie', self.categoriz['name of category'].recipes)
+
