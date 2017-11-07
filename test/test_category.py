@@ -13,3 +13,7 @@ class Categories(unittest.TestCase):
         '''
         tester = Category('category_name', 'category_description')
         self.assertIsInstance(tester, object)
+
+if __name__ == '__main__':
+    unittest.main()
+        

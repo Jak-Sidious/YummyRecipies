@@ -16,3 +16,5 @@ class Recipes(unittest.TestCase):
         result = Recipe('Recipie name', 'Your instructions here')
         self.assertIsInstance(result, object)
 
+if __name__ == '__main__':
+    unittest.main()
