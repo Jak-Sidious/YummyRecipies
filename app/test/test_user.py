@@ -71,3 +71,6 @@ class Users(unittest.TestCase):
         self.userr.delete_recipie('name of category', 'name of recipie')
         self.assertNotIn('name of recipie', self.categoriz['name of category'].recipes)
 
+if __name__ == '__main__':
+    unittest.main()
+
