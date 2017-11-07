@@ -2,7 +2,7 @@
 This module contains the test cases for the recipie class
 '''
 import unittest
-from models.recipie import Recipe
+from app.models.recipie import Recipe
 
 
 class Recipes(unittest.TestCase):

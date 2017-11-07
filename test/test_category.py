@@ -1,7 +1,7 @@
 ''' this module contains the test case for the category class
 '''
 import unittest
-from models.category import Category
+from app.models.category import Category
 
 class Categories(unittest.TestCase):
     '''Class destermining the testcase for the category class

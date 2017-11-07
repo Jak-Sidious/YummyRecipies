@@ -1,6 +1,7 @@
 '''This module is used mainly to create test cases for the user class'''
 import unittest
-from models.user import User
+from app.models.user import User
+
 
 class Users(unittest.TestCase):
     '''Class conserning testcases to do with users'''
