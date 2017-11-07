@@ -9,6 +9,6 @@ script:
  - nosetests -v --with-coverage --cover-package=test
  #- nosetests -v --with-coverage --cover-package=app
 
-after success:
+after_success:
  - coveralls
 
