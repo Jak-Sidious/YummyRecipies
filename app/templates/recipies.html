@@ -17,7 +17,7 @@
                         <a href="{{ url_for('catcreate') }}">Create Category</a>
                     </li>
                     <li>
-                        <a href="{{ url_for('view_category')}}">View Category</a>
+                        <a href="">View Category</a>
                     </li>
                     <li>
                         <a href="#">Edit Category</a>
@@ -46,7 +46,7 @@
                     </li>
                 </ul>
             </li>
-            
+
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
@@ -56,4 +56,9 @@
         </ul>
     </div>
 </nav>
+
+{% for rec in all_recs %}
+{{ all_rec }}
+{% endfor %}
+
 {% endblock %}

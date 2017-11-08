@@ -6,6 +6,9 @@ app = Flask(__name__)
 app.secret_key = 'caman'
 Used = {}
 sign = {}
+categoryname = {}
+categorydesc = {}
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -54,33 +57,72 @@ def catcreate():
     if request.method == 'POST':
         catname = request.form['name']
         catdesc = request.form['description']
-        Used[session['username']].categorycreate(catname, catdesc)
-        listing = Used[session['username']].categorycreate(catname, catdesc)
+        categoryname[session['username']] = request.form['name']
+        categorydesc[session['username']] = request.form['description']
+        Used[session['username']].categorycreate(categoryname[session['username']],
+		                                               categorydesc[session['username']])
+        listing = Used[session['username']].categorycreate(categoryname[session['username']],
+		                                               categorydesc[session['username']])
         all_listings = list(listing.values())
         return render_template('categories.html', all_listings=all_listings)
     return render_template('catcreate.html')
 
-@app.route('/categories', methods=['GET', 'POST'])
-def catlisting():
-	'''List all the categories within the app'''
-	return render_template('categories.html')
+@app.route('/categories')
+def ccatlisting():
+    '''List all the categories within the app'''
+    return render_template('categories.html')
 
-@app.route('/view_category/<category_name>', methods=['GET', 'POST'])
-def view_category(category_name):
+@app.route('/view_category', methods=['GET', 'POST'])
+def view_category():
     '''View recipies attached to a particular category'''
-    cat = Used[session['username']].view_recipies(category_name)
+    cat = Used[session['username']].view_categories(categoryname[session['username']])
     if cat is not None:
-        return render_template('catrecipiecreate.html', category_name=category_name)
+        return render_template('catrecipiecreate.html',
+		                             category_name=categoryname[session['username']])
+    return render_template('categories.html')
 	# this is where you call the create recipie function
+	# return
+
+@app.route('/edit_category', methods=['GET', 'POST'])
+def edit_category():
+    '''  edit any recipies attached to a particular category'''
+    if request.method == "POST":
+        editdesc = request.form['description']
+        Used[session['username']].edit_category(categoryname[session['username']],
+                                                editdesc)
+        editor = Used[session['username']].edit_category(categoryname[session['username']],
+                                                         editdesc)
+        all_listings = list(editor.values())
+        return render_template('categories.html', all_listings=all_listings)
+    return render_template('editcategory.html')
+
+@app.route('/delete_category', methods=['GET', 'POST'])
+def delete_category():
+    ''' delete any categories with or without recipes'''
+    if request.method == "POST":
+        # Used[session['username']].delete_category(categoryname[session['username']])
+        deletor = Used[session['username']].delete_category(categoryname[session['username']])
+        all_listings = list(deletor.values())
+        return render_template('categories.html', all_listings=all_listings)
+    return render_template('deletecategory.html')
+
+
+
+
 
 @app.route('/<category_name>/create_recipie', methods=['GET', 'POST'])
 def create_category_recipie(category_name):
-	if request.method == 'POST':
-		cat_name = category_name
-		recipie_name = request.form['recipiename']
-		ingridients = request.form['ingird']
-		Used[session['username']].create_recipe(cat_name, recipie_name, ingridients)
-		return render_template('catrecipiecreate.html')
+    if request.method == 'POST':
+        cat_name = category_name
+        recipie_name = request.form['recipiename']
+        ingridients = request.form['ingird']
+        Used[session['username']].create_recipe(cat_name, recipie_name, ingridients)
+        recs = Used[session['username']].create_recipe(cat_name, recipie_name, ingridients)
+        all_recs = list(recs.values())
+    return render_template('recipies.html', all_recs=all_recs)
+
+# @app.route('/<category_name>/edit_recipie', methods=['GET', 'POST'])
+# def edit_category_recipie(category_nam)
 
 
 @app.route('/logout')
