@@ -3,20 +3,34 @@ from models.user import User
 
 
 app = Flask(__name__)
-Use = {}
+app.secret_key = 'testing'
+Used = {}
 sign = {}
 
 @app.route('/', methods=['GET', 'POST'])
-def user():
-    '''Route to signup page'''
+def index():
+    '''Landing encouraging user to login'''
+    if 'username' in session:
+        username = session['username']
+        password = session['password']
+        return 'Logged in as ' + username + ' with password ' + password +'<br>' + \
+         "<b><a href = '/logout'>click here to log out</a></b>"
+    return "You are not logged in <br><a href = '/signup'></b>" + \
+      "click here to create account in</b></a>"
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    '''page to facilitate creating of accounts'''
     if request.method == 'POST':
-        username = request.form['uname']
-        password = request.form['password']
-        if username and password:
-            a = User(username, password)
-            Use[username] = password
-            return redirect(url_for('signin'))
-    return render_template("signup.html")
+        session['username'] = request.form['uname']
+        session['password'] = request.form['password']
+        user = User(session['username'], session['password'])
+        Used[session['username']] = user
+        flash(session['username'])
+        return redirect(url_for('signin'))
+    return render_template('signup.html')
+
+	# Used[session['username']].(class methid goes here)
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
@@ -25,7 +39,7 @@ def signin():
         siginname = request.form['uname']
         signinpass = request.form['psw']
         sign[siginname] = signinpass
-        if Use == sign:
+        if Used == sign:
             return redirect(url_for('dash'))
     return render_template('signin.html')
 
@@ -35,30 +49,17 @@ def home():
 	'''
     return render_template('home.html')
 
-@app.route('/add')
-def add():
-    '''renders the add recipie page for a user
-    '''
-    return render_template('add.html')
+@app.route('/categoryCreation')
+def catcreate():
+    ''' renders the form used to create the category'''
+    return render_template('catcreate.html')
 
-@app.route('/view')
-def view():
-    '''renders the view recipies page
-    '''
-    return render_template('view.html')
-
-@app.route('/update')
-def update():
-    '''renders the update recipies page
-    '''
-    return render_template('update.html')
-
-@app.route('/delete')
-def delete():
-	'''renders the delete recipies page
-	'''
-	return render_template('delete.html')
-
+@app.route('/logout')
+def logout():
+    '''Remove the session username and password if they are there'''
+    session.pop('username', None)
+    session.pop('password', None)
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
-	app.run(debug=True)
+    app.run(debug=True)
