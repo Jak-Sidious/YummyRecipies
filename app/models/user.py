@@ -1,7 +1,7 @@
 '''This module defines the user class'''
 
-from models.category import Category
-from models.recipie import Recipe
+from app.models.category import Category
+from app.models.recipie import Recipe
 
 
 class User(object):

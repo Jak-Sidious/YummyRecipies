@@ -106,7 +106,7 @@ def delete_category():
         return render_template('categories.html', all_listings=all_listings)
     return render_template('deletecategory.html')
 
-
+#add functionality for recipies
 
 
 
