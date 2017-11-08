@@ -62,9 +62,26 @@ def catcreate():
 
 @app.route('/categories', methods=['GET', 'POST'])
 def catlisting():
-    return render_template('categories.html')
+	'''List all the categories within the app'''
+	return render_template('categories.html')
 
-app.route('/edit_category/<category name>', methods=['GET', 'POST'])
+@app.route('/view_category/<category_name>', methods=['GET', 'POST'])
+def view_category(category_name):
+    '''View recipies attached to a particular category'''
+    cat = Used[session['username']].view_recipies(category_name)
+    if cat is not None:
+        return render_template('catrecipiecreate.html', category_name=category_name)
+	# this is where you call the create recipie function
+
+@app.route('/<category_name>/create_recipie', methods=['GET', 'POST'])
+def create_category_recipie(category_name):
+	if request.method == 'POST':
+		cat_name = category_name
+		recipie_name = request.form['recipiename']
+		ingridients = request.form['ingird']
+		Used[session['username']].create_recipe(cat_name, recipie_name, ingridients)
+		return render_template('catrecipiecreate.html')
+
 
 @app.route('/logout')
 def logout():

@@ -56,31 +56,16 @@
         </ul>
     </div>
 </nav>
-<div>
-    <div class="table-responsive">
-        <table class="table table-hover" width="100%">
-            <thead>
-                <tr>
-                    <th>name</th>
-                    <th>description</th>
-                    <th>view category</th>
-                    <th>edit category</th>
-                    <th>delete category</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for listing in all_listings %}
-                <tr>
-                    <td>{{ listing.category_name }}</td>
-                    <td>{{ listing.description }}</td>
-                    <td><a href="{{url_for('view_category', category_name=listing.category_name)}}" class="btn btn-info" role="button">View</a></td>
-                    
-                </tr>
-                {% endfor %}
+<form action="" method="POST">
+    <label>
+        <b>Recipie name</b>
+    </label>
+    <input type="text" name="recipiename">
+    <label>
+        <b>Ingridients</b>
+    </label>
+    <input type="text" placeholder="Please enter the ingirdients in order" name="ingird" required>
+</form>
 
-            </tbody>
-        </table>
-    </div>
-</div>
 
 {% endblock %}

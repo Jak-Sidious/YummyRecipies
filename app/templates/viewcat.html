@@ -56,31 +56,8 @@
         </ul>
     </div>
 </nav>
-<div>
-    <div class="table-responsive">
-        <table class="table table-hover" width="100%">
-            <thead>
-                <tr>
-                    <th>name</th>
-                    <th>description</th>
-                    <th>view category</th>
-                    <th>edit category</th>
-                    <th>delete category</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for listing in all_listings %}
-                <tr>
-                    <td>{{ listing.category_name }}</td>
-                    <td>{{ listing.description }}</td>
-                    <td><a href="{{url_for('view_category', category_name=listing.category_name)}}" class="btn btn-info" role="button">View</a></td>
-                    
-                </tr>
-                {% endfor %}
-
-            </tbody>
-        </table>
-    </div>
-</div>
+{% for cat in cats %}
+{{ cat }}
+{% endfor %}
 
 {% endblock %}
