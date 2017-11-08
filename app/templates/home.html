@@ -14,7 +14,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#">Create Category</a>
+                        <a href="{{ url_for('catcreate') }}">Create Category</a>
                     </li>
                     <li>
                         <a href="#">View Category</a>
@@ -50,7 +50,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="{{ url_for('landing') }}">
+                <a href="{{ url_for('logout') }}">
                     <span class="glyphicon glyphicon-user"></span> Sign out</a>
             </li>
         </ul>

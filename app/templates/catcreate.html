@@ -14,7 +14,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="{{ url_for('categoryCreation') }}">Create Category</a>
+                        <a href="{{ url_for('catcreate') }}">Create Category</a>
                     </li>
                     <li>
                         <a href="#">View Category</a>
@@ -46,14 +46,27 @@
                     </li>
                 </ul>
             </li>
-            
+
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="{{ url_for('landing') }}">
+                <a href="{{ url_for('logout') }}">
                     <span class="glyphicon glyphicon-user"></span> Sign out</a>
             </li>
         </ul>
     </div>
 </nav>
+<div>
+    <form action="" target="" method="POST">
+        name:
+        <br>
+        <input type="text" name="name" value="Mickey">
+        <br> Description:
+        <br>
+        <input type="text" name="description" value="Mouse">
+        <br>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
 {% endblock %}

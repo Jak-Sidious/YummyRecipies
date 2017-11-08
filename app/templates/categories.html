@@ -14,7 +14,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#">Create Category</a>
+                        <a href="{{ url_for('catcreate') }}">Create Category</a>
                     </li>
                     <li>
                         <a href="#">View Category</a>
@@ -46,14 +46,42 @@
                     </li>
                 </ul>
             </li>
-            
+
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="{{ url_for('landing') }}">
+                <a href="{{ url_for('logout') }}">
                     <span class="glyphicon glyphicon-user"></span> Sign out</a>
             </li>
         </ul>
     </div>
 </nav>
+<div>
+    <div class="table-responsive">
+        <table class="table table-hover" width="100%">
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>description</th>
+                    <th>view category</th>
+                    <th>edit category</th>
+                    <th>delete category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for listing in all_listings %}
+                <tr>
+                    <td>{{ listing.category_name }}</td>
+                    <td>{{ listing.description }}</td>
+                    <td><a href="#" class="btn btn-info" role="button">View</a></td>
+                    <td><a href="#" class="btn btn-warning" role="button">Edit</a></td>
+                    <td><a href="#" class="btn btn-danger" role="button">Delete</a></td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
 {% endblock %}

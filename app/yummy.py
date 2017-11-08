@@ -3,7 +3,7 @@ from models.user import User
 
 
 app = Flask(__name__)
-app.secret_key = 'testing'
+app.secret_key = 'caman'
 Used = {}
 sign = {}
 
@@ -26,7 +26,6 @@ def signup():
         session['password'] = request.form['password']
         user = User(session['username'], session['password'])
         Used[session['username']] = user
-        flash(session['username'])
         return redirect(url_for('signin'))
     return render_template('signup.html')
 
@@ -39,8 +38,8 @@ def signin():
         siginname = request.form['uname']
         signinpass = request.form['psw']
         sign[siginname] = signinpass
-        if Used == sign:
-            return redirect(url_for('dash'))
+        if Used[session['username']].username == siginname and Used[session['username']].password == signinpass:
+            return redirect(url_for('home'))
     return render_template('signin.html')
 
 @app.route('/home')
@@ -49,10 +48,23 @@ def home():
 	'''
     return render_template('home.html')
 
-@app.route('/categoryCreation')
+@app.route('/categoryCreation', methods=['GET', 'POST'])
 def catcreate():
     ''' renders the form used to create the category'''
+    if request.method == 'POST':
+        catname = request.form['name']
+        catdesc = request.form['description']
+        Used[session['username']].categorycreate(catname, catdesc)
+        listing = Used[session['username']].categorycreate(catname, catdesc)
+        all_listings = list(listing.values())
+        return render_template('categories.html', all_listings=all_listings)
     return render_template('catcreate.html')
+
+@app.route('/categories', methods=['GET', 'POST'])
+def catlisting():
+    return render_template('categories.html')
+
+app.route('/edit_category/<category name>', methods=['GET', 'POST'])
 
 @app.route('/logout')
 def logout():
