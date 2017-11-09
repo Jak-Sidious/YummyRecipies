@@ -15,47 +15,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Yummy Recipies</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="#">Home</a>
-                </li>
-                <li>
-                    <a href="#">Add Recipie</a>
-                </li>
-                <li>
-                    <a href="#">View Recipies</a>
-                </li>
-                <li>
-                    <a href="#">Update Recipies</a>
-                </li>
-                <li>
-                    <a href="#">Delete Recipies</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-user"></span> Profile</a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-stop"></span> Sign out</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        {% block content %}{% endblock %}
 
-    <div>
-        <h2>This div shows featured recipies</h1>
-    </div>
-    <div>
-        <h2> This div shows most liked or shared recipies amongst users</h1>
-    </div>
 </body>
 
 </html>

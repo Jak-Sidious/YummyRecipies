@@ -12,6 +12,11 @@ h1{
     text-align: center;
 }
 
+.supercontainer{
+    width: 50%;
+    margin:0 auto;
+}
+
 
 /* Set a style for all buttons */
 button {
@@ -37,8 +42,8 @@ button:hover {
 
 /* styles for signin form cancelbutton */
 .cancelbttn {
-    width: auto;
-    padding: 10px 18px;
+    width: 100%;
+    padding: 14px 20px;
     background-color: #f44336;
 }
 

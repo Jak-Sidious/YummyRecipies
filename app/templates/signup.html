@@ -7,61 +7,34 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign up</title>
 
-    <link href="/app/static/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href =" {{ url_for('static',filename='style.css') }}">
+    
 </head>
 
 <body>
     <h1>Sigup form </h1>
-    <form action="" style="border: 1px solid #ccc">
-        <div class="container">
-            <label>
-                <b>First Name</b>
-            </label>
-            <input type="text" placeholder="Please enter first Name" name="fname" required>
 
-            <label>
-                <b>Last Name</b>
-            </label>
-            <input type="text" placeholder="Please enter last Name" name="lname" required>
+    <div class="supercontainer">
+        <form method ="POST" action="" style="border: 1px solid #ccc">
+            <div class="container">
+                <label>
+                    <b>User Name</b>
+                </label>
+                <input type="text" placeholder="Please enter first Name" name="uname" required>
 
-            <label>
-                <b>age</b>
-            </label>
-            <input type="number" name="quantity" min="12" max="90">
-            <br>
+                <label>
+                    <b>Password</b>
+                </label>
+                <input type="text" placeholder="Please enter last Name" name="password" required>
 
-            <br>
-            <label>
-                <b>Gender</b>
-            </label>
-            <br>
-            <input type="radio" name="gender" value="male">Male
-            <br>
-            <input type="radio" name="gender" value="female">Female
-            <br>
-            <input type="radio" name="gender" value="Other">Other
-            <br>
-            <br>
-
-            <label>
-                <b>Phone Number</b>
-            </label>
-            <br>
-            <input type="tel" placeholder="phone number" name="usrtel" required>
-            <br>
-
-            <label>
-                <b>E-mail:</b>
-            </label>
-            <br>
-            <input type="email" placeholder="Email addresss" name="email" required>
-        </div>
-        <div class="clearfix">
-            <button type="button" class="cancelbtn">Cancel</button>
-            <button type="submit" class="signupbtn">Sign Up</button>
-        </div>
-    </form>
-    <script src="static/modal.js"></script>
+            </div>
+            <div class="clearfix">
+                <button type="button" class="cancelbtn">Cancel</button>
+                <button type="submit" class="signupbtn">Sign Up</button>
+            </div>
+        </form>
+    </div>
+    <script src="/app/static/modal.js"></script>
 </body>
 
 </html>
