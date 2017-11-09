@@ -1,5 +1,5 @@
 from flask import *
-from models.user import User
+from app.models.user import User
 
 
 app = Flask(__name__)
