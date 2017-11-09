@@ -26,7 +26,7 @@ button {
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 80%;
+    width: 100%;
 }
 
 button:hover {
@@ -42,7 +42,7 @@ button:hover {
 
 /* styles for signin form cancelbutton */
 .cancelbttn {
-    width: auto;
+    width: 100%;
     padding: 14px 20px;
     background-color: #f44336;
 }

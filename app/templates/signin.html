@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Sign in </title>
-  <link href="/app/static/style.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href =" {{ url_for('static',filename='style.css') }}">
 </head>
 
 <body>
@@ -27,13 +27,13 @@
         </label>
         <input type="password" placeholder="Enter Password" name="psw" required>
 
-        <input type="checkbox" checked="checked"> Remember me
-        <!-- <button type="submit">Login</button> -->
+        <!-- <input type="checkbox" checked="checked"> Remember me -->
+        <button type="submit">Login</button>
 
       </div>
 
       <div class="container" style="background-color:#f1f1f1">
-        <button type="submit">Login</button>
+        <!-- <button type="submit">Login</button> -->
         <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbttn">Cancel</button>
       </div>
     </form>

@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign up</title>
 
-    <link href="/app/static/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href =" {{ url_for('static',filename='style.css') }}">
+    
 </head>
 
 <body>
@@ -20,11 +21,6 @@
                     <b>User Name</b>
                 </label>
                 <input type="text" placeholder="Please enter first Name" name="uname" required>
-
-                <!-- <label>
-                    <b>Last Name</b>
-                </label>
-                <input type="text" placeholder="Please enter last Name" name="lname" required> -->
 
                 <label>
                     <b>Password</b>
