@@ -2,6 +2,7 @@ from flask import *
 from app.models.user import User
 
 
+
 app = Flask(__name__)
 app.secret_key = 'caman'
 Used = {}
@@ -55,8 +56,8 @@ def home():
 def catcreate():
     ''' renders the form used to create the category'''
     if request.method == 'POST':
-        # catname = request.form['name']
-        # catdesc = request.form['description']
+        catname = request.form['name']
+        catdesc = request.form['description']
         categoryname[session['username']] = request.form['name']
         categorydesc[session['username']] = request.form['description']
         Used[session['username']].categorycreate(categoryname[session['username']],
@@ -85,23 +86,23 @@ def view_category():
 	# return
 
 @app.route('/edit_category', methods=['GET', 'POST'])
-# def edit_category():
-#     '''  edit any recipies attached to a particular category'''
-#     all_categories = Used[session['username']].categories
+def edit_category():
+    '''  edit any recipies attached to a particular category'''
+    all_categories = Used[session['username']].categories
 
-#     if request.method == "POST":
-#         catdesc = request.form['catname']
-#         editdesc = request.form['description']
-#         if catdesc not in all_categories:
-#             current_categories = Used[session['username']].categories
-#             del current_categories[categoryname[session['username']]]
-#             all_categories = Used[session['username']].categoryCreation(catdesc, editdesc)
-#             all_listings = list(all_categories.values())
-#             return render_template('categories.html', all_listings=all_listings)
-#         else:
-#             Used[session['username']].edit_category(catdesc, editdesc)
-#             return render_template('categories.html', all_listings=all_listings)  
-#     return render_template('editcategory.html')
+    if request.method == "POST":
+        catdesc = request.form['catname']
+        editdesc = request.form['description']
+        if catdesc not in all_categories:
+            current_categories = Used[session['username']].categories
+            del current_categories[categoryname[session['username']]]
+            all_categories = Used[session['username']].categorycreate(catdesc, editdesc)
+            all_listings = list(all_categories.values())
+            return render_template('categories.html', all_listings=all_listings)
+        else:
+            Used[session['username']].edit_category(catdesc, editdesc)
+            return render_template('categories.html', all_listings=all_listings)  
+    return render_template('editcategory.html')
 
 @app.route('/delete_category', methods=['GET', 'POST'])
 def delete_category():
