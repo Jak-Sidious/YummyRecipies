@@ -55,14 +55,14 @@ def home():
 def catcreate():
     ''' renders the form used to create the category'''
     if request.method == 'POST':
-        catname = request.form['name']
-        catdesc = request.form['description']
+        # catname = request.form['name']
+        # catdesc = request.form['description']
         categoryname[session['username']] = request.form['name']
         categorydesc[session['username']] = request.form['description']
         Used[session['username']].categorycreate(categoryname[session['username']],
 		                                               categorydesc[session['username']])
         listing = Used[session['username']].categorycreate(categoryname[session['username']],
-		                                               categorydesc[session['username']])
+                                                           categorydesc[session['username']])
         all_listings = list(listing.values())
         return render_template('categories.html', all_listings=all_listings)
     return render_template('catcreate.html')
@@ -75,26 +75,33 @@ def ccatlisting():
 @app.route('/view_category', methods=['GET', 'POST'])
 def view_category():
     '''View recipies attached to a particular category'''
+    Used[session['username']].view_categories(categoryname[session['username']])
     cat = Used[session['username']].view_categories(categoryname[session['username']])
-    if cat is not None:
-        return render_template('catrecipiecreate.html',
-		                             category_name=categoryname[session['username']])
+    # all_listings = list(cat.values())
+    if cat is None:
+        return render_template('catrecipiecreate.html')
     return render_template('categories.html')
 	# this is where you call the create recipie function
 	# return
 
 @app.route('/edit_category', methods=['GET', 'POST'])
-def edit_category():
-    '''  edit any recipies attached to a particular category'''
-    if request.method == "POST":
-        editdesc = request.form['description']
-        Used[session['username']].edit_category(categoryname[session['username']],
-                                                editdesc)
-        editor = Used[session['username']].edit_category(categoryname[session['username']],
-                                                         editdesc)
-        all_listings = list(editor.values())
-        return render_template('categories.html', all_listings=all_listings)
-    return render_template('editcategory.html')
+# def edit_category():
+#     '''  edit any recipies attached to a particular category'''
+#     all_categories = Used[session['username']].categories
+
+#     if request.method == "POST":
+#         catdesc = request.form['catname']
+#         editdesc = request.form['description']
+#         if catdesc not in all_categories:
+#             current_categories = Used[session['username']].categories
+#             del current_categories[categoryname[session['username']]]
+#             all_categories = Used[session['username']].categoryCreation(catdesc, editdesc)
+#             all_listings = list(all_categories.values())
+#             return render_template('categories.html', all_listings=all_listings)
+#         else:
+#             Used[session['username']].edit_category(catdesc, editdesc)
+#             return render_template('categories.html', all_listings=all_listings)  
+#     return render_template('editcategory.html')
 
 @app.route('/delete_category', methods=['GET', 'POST'])
 def delete_category():
