@@ -65,6 +65,7 @@
                     <th>description</th>
                     <th>edit category</th>
                     <th>delete category</th>
+                    <th>create recipe</th>
                     <th>view recipe</th>
                     <th>edit recipe</th>
                     <th>delete recipe</th>
@@ -77,7 +78,7 @@
                     <td>{{ listing.description }}</td>
                     <td><a href="{{url_for('edit_category', category_name=listing.category_name)}}" class="btn btn-info" role="button">Edit</a></td>
                     <td><a href="{{url_for('delete_category', category_name=listing.category_name)}}" class="btn btn-danger" role="button">Delete</a></td>
-                    
+                    <td><a href="{{url_for('create_category_recipie', category_name=listing.category_name)}}" class="btn btn-danger" role="button">Delete</a></td>
                 </tr>
                 {% endfor %}
 

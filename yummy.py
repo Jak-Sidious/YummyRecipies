@@ -58,8 +58,8 @@ def catcreate():
     if request.method == 'POST':
         catname = request.form['name']
         catdesc = request.form['description']
-        categoryname[session['username']] = request.form['name']
-        categorydesc[session['username']] = request.form['description']
+        categoryname[session['username']] = catname
+        categorydesc[session['username']] = catdesc
         Used[session['username']].categorycreate(categoryname[session['username']],
 		                                               categorydesc[session['username']])
         listing = Used[session['username']].categorycreate(categoryname[session['username']],
@@ -118,19 +118,22 @@ def delete_category():
 
 
 
-@app.route('/<category_name>/create_recipie', methods=['GET', 'POST'])
-def create_category_recipie(category_name):
+@app.route('/create_recipie', methods=['GET', 'POST'])
+def create_category_recipie():
     if request.method == 'POST':
-        cat_name = category_name
+        cat_name = categoryname[session['username']]
         recipie_name = request.form['recipiename']
         ingridients = request.form['ingird']
         Used[session['username']].create_recipe(cat_name, recipie_name, ingridients)
         recs = Used[session['username']].create_recipe(cat_name, recipie_name, ingridients)
         all_recs = list(recs.values())
-    return render_template('recipies.html', all_recs=all_recs)
+        return render_template('showrecipie.html', all_recs=all_recs)
+    return render_template('recipies.html')
 
 # @app.route('/<category_name>/edit_recipie', methods=['GET', 'POST'])
 # def edit_category_recipie(category_nam)
+
+
 
 
 @app.route('/logout')
