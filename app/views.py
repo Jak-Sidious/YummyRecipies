@@ -1,11 +1,11 @@
 from flask import *
-from flask_wtf import FlaskForm
 from app import app
 from app.models.user import User
-import sys
+
 
 userdata = {}
-all_listings = {}
+all_listings = []
+category_store = {}
 @app.route('/', methods=('GET', 'POST'))
 def signup():
     if request.method == 'POST':
@@ -17,6 +17,7 @@ def signup():
         return redirect(url_for('signin', name=name, ))
     return render_template('signup.html')
 
+@app.route('/home')
 @app.route('/<name>/home')
 def home(name):
     '''renders the landing page for all users to see
@@ -32,6 +33,7 @@ def signin(name=None):
         # print(userdata)
         # print(userdata[name].username, "...........")
         # print(userdata[name].password, "............")
+        print (userdata[name])
         if request.method == 'POST':
             name = request.form['uname']
             pssword = request.form['password']
@@ -43,39 +45,51 @@ def signin(name=None):
                 return redirect(url_for('home', name=name))
     return render_template('signin.html')
         
+# @app.route('/categories')
+@app.route('/<name>/categories')
+def ccatlisting(name):
+    '''List all the categories within the app'''
+    return render_template('categories.html', name=name)
 
-@app.route('/<name>/categoryCreation', methods=['GET', 'POST'])
-def catcreate(name):
-    ''' renders the form used to create the category'''
-    if name in userdata.keys():
-        if request.method == 'POST':
-            catname = request.form['name']
-            catdesc = request.form['description']
-            catuse = User(userdata[name].username, userdata[name].password)
-            print (catuse)
-            catuse.categorycreate(catname, catdesc)
-            listing = catuse.categorycreate(catname, catdesc)
-            all_listings = list(listing.values())
-            return render_template('categories.html', all_listings=all_listings)
-    return render_template('catcreate.html')
+# @app.route('/categoryCreation', methods=['GET', 'POST'])
+# @app.route('/<name>/categoryCreation', methods=['GET', 'POST'])
+# def catcreate(name):
+#     ''' renders the form used to create the category'''
+#     # catuse = User(userdata[name].username, userdata[name].password)
+#     if name in userdata.keys():
+#         if request.method == 'POST':
+#             catname = request.form['name']
+#             catdesc = request.form['description']
+#             # 
+#             # print (catuse)
+#             # catuse.categorycreate(catname, catdesc)
+#             # all_listings[catuse.categories[]]
+#             # return redirect(url_for('categories', all_listings=all_listings))
+#             if catname
+#     return render_template('catcreate.html', name=name)
 
-@app.route('/<name>/edit_category', methods=['GET', 'POST'])
-def edit_category(name):
-    '''edit any recipies existingg in the applications'''
-    if name in userdata.keys():
-        catuse = User(userdata[name].username, userdata[name].password)
-        present_items = catuse.categories
-        if request.method == 'POST':
-            catdesc = request.form['catname']
-            editdesc = request.form['description']
-            if catdesc not in present_items:
-                catuse.categorycreate(catdesc, editdesc)
-                all_listings = list(present_items.values())
-                return render_template('categories.html', all_lisings=all_listings)
-            else:
-                catuse.edit_category(catdesc, editdesc)
-                return render_template('categories.html', all_lisings=all_listings)
-    return render_template('editcategory.html', name=name)
+# @app.route('/edit_category')
+# @app.route('/<name>/edit_category', methods=['GET', 'POST'])
+# def edit_category(name):
+#     '''edit any recipies existingg in the applications'''
+#     if name in userdata.keys():
+#         catuse = User(userdata[name].username, userdata[name].password)
+#         present_items = catuse.categories
+        
+#         if request.method == 'POST':
+#             catdesc = request.form['catname']
+#             editdesc = request.form['description']
+#             if catdesc not in present_items:
+#                 # current_categories = catuse.categories
+#                 # del current_categories[userdata[name].username]
+#                 # present_items[userdata[name].username]
+#                 # catuse.categorycreate(catdesc, editdesc)
+#                 # all_listings.append(catuse.categorycreate(catdesc, editdesc))
+#                 # return redirect(url_for('categories.html', all_lisings=all_listings))
+#             else:
+#                 catuse.edit_category(catdesc, editdesc)
+#                 return redirect(url_for('categories.html', all_lisings=all_listings))
+#     return render_template('edit_category.html', name=name)
 # @app.route('/<name>/edit_category', methods=['GET', 'POST'])
 # def edit_category():
 #     '''  edit any recipies attached to a particular category'''
@@ -96,10 +110,7 @@ def edit_category(name):
 #     return render_template('editcategory.html')
 
 
-# @app.route('/categories')
-# def ccatlisting():
-#     '''List all the categories within the app'''
-#     return render_template('categories.html')
+
 
 # @app.route('/view_category', methods=['GET', 'POST'])
 # def view_category():

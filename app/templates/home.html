@@ -8,45 +8,12 @@
             <li class="active">
                 <a href="{{ url_for('home', name=name) }}">Home</a>
             </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Category
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="{{ url_for('catcreate', name=name) }}">Create Category</a>
-                    </li>
-                    <li>
-                        <a href="#">View Category</a>
-                    </li>
-                    <li>
-                        <a href="#">Edit Category</a>
-                    </li>
-                    <li>
-                        <a href="#">Delete Category</a>
-                    </li>
-                </ul>
+            <li>
+                <a href="{{ url_for('ccatlisting') }}">Category</a>
             </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Recipie
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#">Create recipe</a>
-                    </li>
-                    <li>
-                        <a href="#">View Recipie</a>
-                    </li>
-                    <li>
-                        <a href="#">Edit Recipe</a>
-                    </li>
-                    <li>
-                        <a href="#">Delete Recipe</a>
-                    </li>
-                </ul>
+            <li>
+                <a href="#">Recipie</a>
             </li>
-            
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>

@@ -11,8 +11,13 @@ input[type=text], input[type=password], input[type=tel], input[type=email] {
 h1{
     text-align: center;
 }
-
+body{
+    background: url(background.jpg);
+    background-size: 100% 200%;
+    background-repeat: no-repeat;
+}
 .supercontainer{
+    background-color:grey;
     width: 50%;
     margin:0 auto;
 }
