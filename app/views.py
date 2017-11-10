@@ -2,79 +2,99 @@ from flask import *
 from flask_wtf import FlaskForm
 from app import app
 from app.models.user import User
+import sys
 
-
-
+userdata = {}
+all_listings = {}
 @app.route('/', methods=('GET', 'POST'))
 def signup():
     if request.method == 'POST':
         name = request.form['uname']
         password = request.form['password']
         used = User(name, password)
-        return render_template('signin.html', used=used)
+        userdata[name] = used
+        #user_data.append(used)
+        return redirect(url_for('signin', name=name, ))
     return render_template('signup.html')
 
+@app.route('/<name>/home')
+def home(name):
+    '''renders the landing page for all users to see
+	'''
+    if name in userdata.keys():
+        print(userdata[name].username)
+    return render_template('home.html', name=name)
 
-@app.route('/index')
-def index():
-    return "Hello, World!"
+# @app.route('/signin')
+@app.route('/<name>/signin', methods=('GET', 'POST'))
+def signin(name=None):
+    if name in userdata.keys():
+        # print(userdata)
+        # print(userdata[name].username, "...........")
+        # print(userdata[name].password, "............")
+        if request.method == 'POST':
+            name = request.form['uname']
+            pssword = request.form['password']
+            # Test print to ensure user_data is accesible
+            # print (userdata)
+            # print(userdata[name].username, "...........")
+            # print(userdata[name].password, "............")
+            if name == userdata[name].username and pssword == userdata[name].password:
+                return redirect(url_for('home', name=name))
+    return render_template('signin.html')
+        
 
-# @app.route('/', methods=['GET', 'POST'])
-# def index():
-#     '''Landing encouraging user to login'''
-#     if 'username' in session:
-#         username = session['username']
-#         password = session['password']
-#         return 'Logged in as ' + username + ' with password ' + password +'<br>' + \
-#          "<b><a href = '/logout'>click here to log out</a></b>"
-#     return "You are not logged in <br><a href = '/app/templates/signup'></b>" + \
-#       "click here to create account in</b></a>"
+@app.route('/<name>/categoryCreation', methods=['GET', 'POST'])
+def catcreate(name):
+    ''' renders the form used to create the category'''
+    if name in userdata.keys():
+        if request.method == 'POST':
+            catname = request.form['name']
+            catdesc = request.form['description']
+            catuse = User(userdata[name].username, userdata[name].password)
+            print (catuse)
+            catuse.categorycreate(catname, catdesc)
+            listing = catuse.categorycreate(catname, catdesc)
+            all_listings = list(listing.values())
+            return render_template('categories.html', all_listings=all_listings)
+    return render_template('catcreate.html')
 
-# @app.route('/signup', methods=['GET', 'POST'])
-# def signup():
-#     '''page to facilitate creating of accounts'''
-#     if request.method == 'POST':
-#         session['username'] = request.form['uname']
-#         session['password'] = request.form['password']
-#         user = User(session['username'], session['password'])
-#         Used[session['username']] = user
-#         return redirect(url_for('signin'))
-#     return render_template('signup.html')
+@app.route('/<name>/edit_category', methods=['GET', 'POST'])
+def edit_category(name):
+    '''edit any recipies existingg in the applications'''
+    if name in userdata.keys():
+        catuse = User(userdata[name].username, userdata[name].password)
+        present_items = catuse.categories
+        if request.method == 'POST':
+            catdesc = request.form['catname']
+            editdesc = request.form['description']
+            if catdesc not in present_items:
+                catuse.categorycreate(catdesc, editdesc)
+                all_listings = list(present_items.values())
+                return render_template('categories.html', all_lisings=all_listings)
+            else:
+                catuse.edit_category(catdesc, editdesc)
+                return render_template('categories.html', all_lisings=all_listings)
+    return render_template('editcategory.html', name=name)
+# @app.route('/<name>/edit_category', methods=['GET', 'POST'])
+# def edit_category():
+#     '''  edit any recipies attached to a particular category'''
+#     all_categories = Used[session['username']].categories
 
-# 	# Used[session['username']].(class methid goes here)
+#     if request.method == "POST":
+#         catdesc = request.form['catname']
+#         editdesc = request.form['description']
+#         if catdesc not in all_categories:
+#             current_categories = Used[session['username']].categories
+#             del current_categories[categoryname[session['username']]]
+#             all_categories = Used[session['username']].categorycreate(catdesc, editdesc)
+#             all_listings = list(all_categories.values())
+#             return render_template('categories.html', all_listings=all_listings)
+#         else:
+#             Used[session['username']].edit_category(catdesc, editdesc)
+#             return render_template('categories.html', all_listings=all_listings)  
+#     return render_template('editcategory.html')
 
-# @app.route('/signin', methods=['GET', 'POST'])
-# def signin():
-#     '''Route to sign in users'''
-#     if request.method == 'POST':
-#         siginname = request.form['uname']
-#         signinpass = request.form['psw']
-#         sign[siginname] = signinpass
-#         if Used[session['username']].username == siginname and Used[session['username']].password == signinpass:
-#             return redirect(url_for('home'))
-#     return render_template('signin.html')
-
-# @app.route('/home')
-# def home():
-#     '''renders the landing page for all users to see
-# 	'''
-#     return render_template('home.html')
-
-# @app.route('/categoryCreation', methods=['GET', 'POST'])
-# def catcreate():
-#     ''' renders the form used to create the category'''
-#     if request.method == 'POST':
-#         catname = request.form['name']
-#         catdesc = request.form['description']
-#         categoryname[session['username']] = catname
-#         categorydesc[session['username']] = catdesc
-#         Used[session['username']].categorycreate(categoryname[session['username']],
-# 		                                               categorydesc[session['username']])
-#         listing = Used[session['username']].categorycreate(categoryname[session['username']],
-#                                                            categorydesc[session['username']])
-#         all_listings = list(listing.values())
-#         return render_template('categories.html', all_listings=all_listings)
-#     return render_template('catcreate.html')
 
 # @app.route('/categories')
 # def ccatlisting():
@@ -93,24 +113,6 @@ def index():
 # 	# this is where you call the create recipie function
 # 	# return
 
-# @app.route('/edit_category', methods=['GET', 'POST'])
-# def edit_category():
-#     '''  edit any recipies attached to a particular category'''
-#     all_categories = Used[session['username']].categories
-
-#     if request.method == "POST":
-#         catdesc = request.form['catname']
-#         editdesc = request.form['description']
-#         if catdesc not in all_categories:
-#             current_categories = Used[session['username']].categories
-#             del current_categories[categoryname[session['username']]]
-#             all_categories = Used[session['username']].categorycreate(catdesc, editdesc)
-#             all_listings = list(all_categories.values())
-#             return render_template('categories.html', all_listings=all_listings)
-#         else:
-#             Used[session['username']].edit_category(catdesc, editdesc)
-#             return render_template('categories.html', all_listings=all_listings)  
-#     return render_template('editcategory.html')
 
 # @app.route('/delete_category', methods=['GET', 'POST'])
 # def delete_category():
