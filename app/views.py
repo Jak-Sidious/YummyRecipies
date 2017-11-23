@@ -1,58 +1,50 @@
 from flask import *
-from flask_wtf import FlaskForm
 from app import app
 from app.models.user import User
 
-
+user_data = {}
+all_listings = []
+category_store = {}
 
 @app.route('/', methods=('GET', 'POST'))
 def signup():
+    '''Defualt route loaded as soon as the app starts for 
+       the user to signup
+    '''
     if request.method == 'POST':
         name = request.form['uname']
         password = request.form['password']
         used = User(name, password)
-        return render_template('signin.html', used=used)
+        user_data[name] = used
+        # Test prints
+        # print(user_data)
+        #user_data.append(used)
+        # end of test prints 
+        return redirect(url_for('signin', name=name))
     return render_template('signup.html')
 
 
-@app.route('/index')
-def index():
-    return "Hello, World!"
+@app.route('/signin')
+@app.route('/<name>/signin', methods=('GET', 'POST'))
+def signin(name=None):
+    ''' route for the signin functionality'''
+    if name in user_data.keys():
+        if request.method == 'POST':
+            name = request.form['uname']
+            pssword = request.form['psw']
+            if name == user_data[name].username and pssword == user_data[name].password:
+                return redirect(url_for('home', name=name))
+    return render_template('signin.html')
 
-# @app.route('/', methods=['GET', 'POST'])
-# def index():
-#     '''Landing encouraging user to login'''
-#     if 'username' in session:
-#         username = session['username']
-#         password = session['password']
-#         return 'Logged in as ' + username + ' with password ' + password +'<br>' + \
-#          "<b><a href = '/logout'>click here to log out</a></b>"
-#     return "You are not logged in <br><a href = '/app/templates/signup'></b>" + \
-#       "click here to create account in</b></a>"
 
-# @app.route('/signup', methods=['GET', 'POST'])
-# def signup():
-#     '''page to facilitate creating of accounts'''
-#     if request.method == 'POST':
-#         session['username'] = request.form['uname']
-#         session['password'] = request.form['password']
-#         user = User(session['username'], session['password'])
-#         Used[session['username']] = user
-#         return redirect(url_for('signin'))
-#     return render_template('signup.html')
-
-# 	# Used[session['username']].(class methid goes here)
-
-# @app.route('/signin', methods=['GET', 'POST'])
-# def signin():
-#     '''Route to sign in users'''
-#     if request.method == 'POST':
-#         siginname = request.form['uname']
-#         signinpass = request.form['psw']
-#         sign[siginname] = signinpass
-#         if Used[session['username']].username == siginname and Used[session['username']].password == signinpass:
-#             return redirect(url_for('home'))
-#     return render_template('signin.html')
+@app.route('/home')
+@app.route('/<name>/home')
+def home(name=None):
+    '''renders the landing page for all users to see
+	'''
+    if name in user_data.keys():
+        print(user_data[name].username)
+    return render_template('home.html', name=name)
 
 # @app.route('/home')
 # def home():
