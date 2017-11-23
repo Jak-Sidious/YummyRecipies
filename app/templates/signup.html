@@ -7,34 +7,40 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign up</title>
 
-    <link rel="stylesheet" type="text/css" href =" {{ url_for('static',filename='style.css') }}">
-    
+    <link rel="stylesheet" type="text/css" href=" {{ url_for('static',filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+
 </head>
 
 <body>
-    <h1>Sigup form </h1>
+    <h1>Signup</h1>
 
     <div class="supercontainer">
-        <form method ="POST" action="" style="border: 1px solid #ccc">
+        <form method="POST" action="" style="border: 1px solid #ccc">
             <div class="container">
-                <label>
-                    <b>User Name</b>
-                </label>
-                <input type="text" placeholder="Please enter first Name" name="uname" required>
-
-                <label>
-                    <b>Password</b>
-                </label>
-                <input type="text" placeholder="Please enter last Name" name="password" required>
-
-            </div>
-            <div class="clearfix">
-                <button type="button" class="cancelbtn">Cancel</button>
-                <button type="submit" class="signupbtn">Sign Up</button>
+                <div class="form-group">
+                    <label for="email">User Name</label>
+                    <input type="text" class="form-control" placeholder="Enter email" name="uname">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input type="password" class="form-control" placeholder="Enter password" name="password">
+                </div>
+                <!-- <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="remember"> Remember me</label>
+                </div> -->
+                <button class="btn btn-primary" type="submit">Signup</button>
             </div>
         </form>
     </div>
-    <script src="/app/static/modal.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
