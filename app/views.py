@@ -3,8 +3,7 @@ from app import app
 from app.models.user import User
 
 user_data = {}
-all_listings = []
-category_store = {}
+categorystore = {}
 
 @app.route('/', methods=('GET', 'POST'))
 def signup():
@@ -17,27 +16,26 @@ def signup():
         used = User(name, password)
         user_data[name] = used
         # Test prints
+        #print (user_data[name])
         # print(user_data)
         #user_data.append(used)
-        # end of test prints 
+        # end of test prints
         return redirect(url_for('signin', name=name))
     return render_template('signup.html')
 
 
-@app.route('/signin')
 @app.route('/<name>/signin', methods=('GET', 'POST'))
 def signin(name=None):
     ''' route for the signin functionality'''
-    if name in user_data.keys():
-        if request.method == 'POST':
-            name = request.form['uname']
-            pssword = request.form['psw']
-            if name == user_data[name].username and pssword == user_data[name].password:
-                return redirect(url_for('home', name=name))
+    if name in user_data.keys() and request.method == 'POST':
+        name = request.form['uname']
+        pssword = request.form['psw']
+        if name == user_data[name].username and pssword == user_data[name].password:
+            return redirect(url_for('home', name=name))
     return render_template('signin.html')
 
 
-@app.route('/home')
+
 @app.route('/<name>/home')
 def home(name=None):
     '''renders the landing page for all users to see
@@ -46,33 +44,34 @@ def home(name=None):
         print(user_data[name].username)
     return render_template('home.html', name=name)
 
-# @app.route('/home')
-# def home():
-#     '''renders the landing page for all users to see
-# 	'''
-#     return render_template('home.html')
+@app.route('/<name>/categories')
+def ccatlisting(name=None):
+    '''List all the categories within the app'''
+    if name in user_data.keys():
+        print(user_data[name].username)
+    return render_template('categories.html', categorystore=categorystore, name=name)
 
-# @app.route('/categoryCreation', methods=['GET', 'POST'])
-# def catcreate():
-#     ''' renders the form used to create the category'''
-#     if request.method == 'POST':
-#         catname = request.form['name']
-#         catdesc = request.form['description']
-#         categoryname[session['username']] = catname
-#         categorydesc[session['username']] = catdesc
-#         Used[session['username']].categorycreate(categoryname[session['username']],
-# 		                                               categorydesc[session['username']])
-#         listing = Used[session['username']].categorycreate(categoryname[session['username']],
-#                                                            categorydesc[session['username']])
-#         all_listings = list(listing.values())
-#         return render_template('categories.html', all_listings=all_listings)
-#     return render_template('catcreate.html')
+@app.route('/<name>/categorycreation', methods=['GET', 'POST'])
+def catcreate(name=None):
+    '''route that renders the page to create categories'''
+    if name in user_data.keys() and request.method == 'POST':
+        catname = request.form['name']
+        catdesc = request.form['description']
+        created_categories = user_data[name].categories
 
-# @app.route('/categories')
-# def ccatlisting():
-#     '''List all the categories within the app'''
-#     return render_template('categories.html')
+        if catname in created_categories:
+            return render_template('categories.html', categorystore=categorystore, name=name)
 
+        user_data[name].categorycreate(catname, catdesc)
+        categorystore[catname] = catdesc
+        print(categorystore)
+
+        return render_template('categories.html', categorystore=categorystore, name=name)
+    return render_template('catcreate.html', name=name)
+
+@app.route('/<name>/view_category', methods=['GET', 'POST'])
+def view_category():
+    '''View recipies attached to a particular category'''
 # @app.route('/view_category', methods=['GET', 'POST'])
 # def view_category():
 #     '''View recipies attached to a particular category'''

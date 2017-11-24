@@ -6,7 +6,7 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="active">
-                <a href="{{ url_for('home') }}">Home</a>
+                <a href="#">Home</a>
             </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Category
@@ -14,7 +14,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="{{ url_for('catcreate') }}">Create Category</a>
+                        <a href="#">Create Category</a>
                     </li>
                     <li>
                         <a href="#">View Category</a>
@@ -50,7 +50,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="{{ url_for('logout') }}">
+                <a href="#">
                     <span class="glyphicon glyphicon-user"></span> Sign out</a>
             </li>
         </ul>
@@ -63,22 +63,22 @@
                 <tr>
                     <th>name</th>
                     <th>description</th>
-                    <th>edit category</th>
+                    <!-- <th>edit category</th>
                     <th>delete category</th>
                     <th>create recipe</th>
                     <th>view recipe</th>
                     <th>edit recipe</th>
-                    <th>delete recipe</th>
+                    <th>delete recipe</th> -->
                 </tr>
             </thead>
             <tbody>
-                {% for listing in all_listings %}
+                {% for key, value  in categorystore.items() %}
                 <tr>
-                    <td>{{ listing.category_name }}</td>
-                    <td>{{ listing.description }}</td>
-                    <td><a href="{{url_for('edit_category', category_name=listing.category_name)}}" class="btn btn-info" role="button">Edit</a></td>
-                    <td><a href="{{url_for('delete_category', category_name=listing.category_name)}}" class="btn btn-danger" role="button">Delete</a></td>
-                    <td><a href="{{url_for('create_category_recipie', category_name=listing.category_name)}}" class="btn btn-danger" role="button">Delete</a></td>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                    <!-- <td><a href="#" class="btn btn-info" role="button">Edit</a></td>
+                    <td><a href="#" class="btn btn-danger" role="button">Delete</a></td>
+                    <td><a href="#" class="btn btn-danger" role="button">Delete</a></td> -->
                 </tr>
                 {% endfor %}
 
