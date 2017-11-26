@@ -8,4 +8,10 @@ class Category(object):
         self.category_name = category_name
         self.description = description
         self.recipes = {}
+
+    def __repr__(self):
+        return "Category name:%s, \tCategory Description:%s, Category Recipies:%s" % (self.category_name, self.description, self.recipes)
+
+    def __str__(self):
+        return "Category name:%s, Category Description:%s, Category Recipies:%s" % (self.category_name, self.description, self.recipes)
         

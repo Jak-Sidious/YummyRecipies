@@ -5,9 +5,10 @@ from app.models.user import User
 user_data = {}
 categorystore = {}
 
+
 @app.route('/', methods=('GET', 'POST'))
 def signup():
-    '''Defualt route loaded as soon as the app starts for 
+    '''Default route loaded as soon as the app starts for 
        the user to signup
     '''
     if request.method == 'POST':
@@ -27,6 +28,7 @@ def signup():
 @app.route('/<name>/signin', methods=('GET', 'POST'))
 def signin(name=None):
     ''' route for the signin functionality'''
+    # error = None
     if name in user_data.keys() and request.method == 'POST':
         name = request.form['uname']
         pssword = request.form['psw']
@@ -58,31 +60,39 @@ def catcreate(name=None):
         catname = request.form['name']
         catdesc = request.form['description']
         created_categories = user_data[name].categories
+        session['catname'] = catname
+        session['catdesc'] = catdesc
 
         if catname in created_categories:
             return render_template('categories.html', categorystore=categorystore, name=name)
 
-        user_data[name].categorycreate(catname, catdesc)
-        categorystore[catname] = catdesc
+        user_data[name].categorycreate(session['catname'], session['catdesc'])
+        categorystore[session['catname']] = user_data[name].categorycreate(session['catname'], session['catdesc'])
         print(categorystore)
 
         return render_template('categories.html', categorystore=categorystore, name=name)
     return render_template('catcreate.html', name=name)
 
-@app.route('/<name>/view_category', methods=['GET', 'POST'])
-def view_category():
-    '''View recipies attached to a particular category'''
-# @app.route('/view_category', methods=['GET', 'POST'])
-# def view_category():
-#     '''View recipies attached to a particular category'''
-#     Used[session['username']].view_categories(categoryname[session['username']])
-#     cat = Used[session['username']].view_categories(categoryname[session['username']])
-#     # all_listings = list(cat.values())
-#     if cat is None:
-#         return render_template('catrecipiecreate.html')
-#     return render_template('categories.html')
-# 	# this is where you call the create recipie function
-# 	# return
+# @app.route('/<name>/editcategory', methods=['GET', 'POST'])
+# def edit_category(name=None):
+#     if name in user_data.keys() and request.method == 'POST':
+
+
+# @app.route('/<name>/edit_category', methods=['GET', 'POST'])
+# def edit_category(name=None):
+#     ''' edit any recipies attached to a particular category'''
+#     all_categories = user_data[name].categories
+
+#     if name in user_data.keys() and request.method == 'POST':
+#         catnam = request.form['catname']
+#         editdesc = request.form['description']
+#         if catnam not in all_categories:
+#             current_categories = user_data[name].categories
+#             del current_categories
+#             return render_template('categories.html', categorystore=categorystore, name=name)
+#         else:
+#             user_data[name].edit_category(catnam, editdesc)
+            
 
 # @app.route('/edit_category', methods=['GET', 'POST'])
 # def edit_category():
@@ -102,6 +112,41 @@ def view_category():
 #             Used[session['username']].edit_category(catdesc, editdesc)
 #             return render_template('categories.html', all_listings=all_listings)  
 #     return render_template('editcategory.html')
+
+
+# @app.route('/name/delete_category', methods=['GET', 'POST'])
+# def delete_category():
+#     '''delete a category'''
+#     if name in user_data.keys() and request.method == 'POST':
+# @app.route('/delete_category', methods=['GET', 'POST'])
+# def delete_category():
+#     ''' delete any categories with or without recipes'''
+#     if request.method == "POST":
+#         # Used[session['username']].delete_category(categoryname[session['username']])
+#         deletor = Used[session['username']].delete_category(categoryname[session['username']])
+#         all_listings = list(deletor.values())
+#         return render_template('categories.html', all_listings=all_listings)
+#     return render_template('deletecategory.html')
+
+
+# @app.route('/<name>/view_category', methods=['GET', 'POST'])
+# def view_category():
+#     '''View recipies attached to a particular category'''
+
+
+# @app.route('/view_category', methods=['GET', 'POST'])
+# def view_category():
+#     '''View recipies attached to a particular category'''
+#     Used[session['username']].view_categories(categoryname[session['username']])
+#     cat = Used[session['username']].view_categories(categoryname[session['username']])
+#     # all_listings = list(cat.values())
+#     if cat is None:
+#         return render_template('catrecipiecreate.html')
+#     return render_template('categories.html')
+# 	# this is where you call the create recipie function
+# 	# return
+
+
 
 # @app.route('/delete_category', methods=['GET', 'POST'])
 # def delete_category():
