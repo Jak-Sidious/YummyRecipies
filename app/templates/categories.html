@@ -63,22 +63,22 @@
                 <tr>
                     <th>name</th>
                     <th>Category details</th>
-                    <!-- <th>edit category</th>
+                    <th>Category Recipies</th>
                     <th>delete category</th>
                     <th>create recipe</th>
                     <th>view recipe</th>
                     <th>edit recipe</th>
-                    <th>delete recipe</th> -->
+                    <th>delete recipe</th>
                 </tr>
             </thead>
             <tbody>
-                {% for key, value  in categorystore.items() %}
+                {% for listing in all_listings %}
                 <tr>
-                    <td>{{ key }}</td>
-                    <td>{{ value }}</td>
-                    <!-- <td><a href="#" class="btn btn-info" role="button">Edit</a></td>
+                    <td>{{ listing.category_name }}</td>
+                    <td>{{ listing.description }}</td>
+                    <td>{{ listing.recipes }}</td>
                     <td><a href="#" class="btn btn-danger" role="button">Delete</a></td>
-                    <td><a href="#" class="btn btn-danger" role="button">Delete</a></td> -->
+                    <td><a href="#" class="btn btn-danger" role="button">Delete</a></td>
                 </tr>
                 {% endfor %}
 

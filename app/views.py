@@ -4,6 +4,7 @@ from app.models.user import User
 
 user_data = {}
 categorystore = {}
+all_listings = []
 
 
 @app.route('/', methods=('GET', 'POST'))
@@ -51,7 +52,7 @@ def ccatlisting(name=None):
     '''List all the categories within the app'''
     if name in user_data.keys():
         print(user_data[name].username)
-    return render_template('categories.html', categorystore=categorystore, name=name)
+    return render_template('categories.html', all_listings=all_listings, name=name)
 
 @app.route('/<name>/categorycreation', methods=['GET', 'POST'])
 def catcreate(name=None):
@@ -63,14 +64,14 @@ def catcreate(name=None):
         session['catname'] = catname
         session['catdesc'] = catdesc
 
-        if catname in created_categories:
-            return render_template('categories.html', categorystore=categorystore, name=name)
 
         user_data[name].categorycreate(session['catname'], session['catdesc'])
-        categorystore[session['catname']] = user_data[name].categorycreate(session['catname'], session['catdesc'])
+        listing = user_data[name].categorycreate(session['catname'], session['catdesc'])
+        all_listings = list(listing.values())
+        # categorystore[session['catname']] = user_data[name].categorycreate(session['catname'], session['catdesc'])
         print(categorystore)
 
-        return render_template('categories.html', categorystore=categorystore, name=name)
+        return render_template('categories.html', all_listings=all_listings, name=name)
     return render_template('catcreate.html', name=name)
 
 # @app.route('/<name>/editcategory', methods=['GET', 'POST'])
