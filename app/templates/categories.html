@@ -6,7 +6,13 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="active">
-                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('home', name=name) }}">Home</a>
+            </li>
+            <li class>
+                <a href="{{ url_for('ccatlisting', name=name) }}">Category</a>
+            </li>
+            <li class>
+                <a href="#">Recipie</a>
             </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Category
@@ -14,7 +20,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="{{ url_for('catcreate') }}">Create Category</a>
+                        <a href="{{ url_for('catcreate', name=name) }}">Create Category</a>
                     </li>
                     <li>
                         <a href="#">View Category</a>
@@ -50,7 +56,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="{{ url_for('logout') }}">
+                <a href="">
                     <span class="glyphicon glyphicon-user"></span> Sign out</a>
             </li>
         </ul>
@@ -76,9 +82,7 @@
                 <tr>
                     <td>{{ listing.category_name }}</td>
                     <td>{{ listing.description }}</td>
-                    <td><a href="{{url_for('edit_category', category_name=listing.category_name)}}" class="btn btn-info" role="button">Edit</a></td>
-                    <td><a href="{{url_for('delete_category', category_name=listing.category_name)}}" class="btn btn-danger" role="button">Delete</a></td>
-                    <td><a href="{{url_for('create_category_recipie', category_name=listing.category_name)}}" class="btn btn-danger" role="button">Delete</a></td>
+                    <td><a href="{{url_for('edit_category', name=name)}}" class="btn btn-info" role="button">Edit</a></td>
                 </tr>
                 {% endfor %}
 
